@@ -2,13 +2,18 @@ const functions = require("firebase-functions");
 const app = require("express")();
 
 const {
-  getPolicy,
+  getPolicies,
+  getPolicyByID,
   createPolicy,
   deletePolicy,
+  updatePolicy,
 } = require("./APIs/policies");
 
 // Get a policy by ID
-app.get("/policy", getPolicy);
+app.get("/policy/:policyId", getPolicyByID);
+
+// Get a list of policies
+app.get("/policy", getPolicies);
 
 // List policies with filters
 app.post("/policy", createPolicy);
@@ -17,6 +22,6 @@ app.post("/policy", createPolicy);
 app.delete("/policy/:policyId", deletePolicy);
 
 // Update a policy by ID
-app.update("/policy/:policyId", updatePolicy);
+app.put("/policy/:policyId", updatePolicy);
 
 exports.api = functions.https.onRequest(app);
